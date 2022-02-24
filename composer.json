@@ -1,0 +1,17 @@
+{
+    "name": "irinavinter/gb.homework.loc",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App"
+        }
+    },
+    "authors": [
+        {
+            "name": "Irina Vinter",
+            "email": "irishka2150@rambler.ru"
+        }
+    ],
+    "require": {
+        "fakerphp/faker": "^1.19"
+    }
+}
