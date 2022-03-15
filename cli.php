@@ -1,20 +1,22 @@
 <?php
 
-require_once 'vendor/autoload.php';
+include_once "vendor/autoload.php";
 
-use App\User\User;
-use App\Comment\Comment;
-use App\Post\Post;
+use App\Classes\Article\Article;
+use App\Classes\User\User;
+use App\Classes\Comment\Comment;
+use App\Repositories\ArticleRepository;
+use App\Repositories\UserRepository;
+use App\Repositories\CommentRepository;
 
-$faker = Faker\Factory::create();
+$userRepository = new UserRepository();
+$userRepository->save(new User('Irina', 'Vinter', 'vinter@ya.ru'));
+$userRepository->delete(1);
 
-switch ($argv[1]) {
-    case 'User':
-        echo new User($faker->unique()->randomDigit, $faker->firstName, $faker->lastName);
-        break;
-    case 'Post':
-        echo new Post($faker->unique()->randomDigit, $faker->unique()->randomDigit, $faker->text(rand(50, 100)), $faker->text(rand(150, 500)));
-        break;
-    case 'Comment':
-        echo new Comment($faker->unique()->randomDigit, $faker->unique()->randomDigit, $faker->unique()->randomDigit, $faker->text(rand(50, 200)));
-}
+$articleRepository = new ArticleRepository();
+$articleRepository->save(new Article(2, 'New header', 'Some text'));
+$articleRepository->delete(1);
+
+$commentRepository = new CommentRepository();
+$commentRepository->save(new Comment(1, 1, 'Some comment'));
+$commentRepository->delete(1);
