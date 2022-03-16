@@ -4,26 +4,19 @@ namespace App\Repositories;
 
 use App\Classes\Comment\Comment;
 use App\Repositories\CommentRepositoryInterface;
-use App\Connections\SqlLiteConnector;
-use App\Connections\SqlLiteConnectorInterface;
 use App\Exceptions\CommentNotFoundException;
 use PDOStatement;
 use PDO;
+use App\Repositories\EntityRepository;
+use App\Classes\EntityInterface;
 
-class CommentRepository implements CommentRepositoryInterface
+class CommentRepository extends EntityRepository implements CommentRepositoryInterface
 {
-    private SqlLiteConnectorInterface $connector;
-
-    public function __construct(SqlLiteConnectorInterface $sqlLiteConnector = null)
-    {
-        $this->connector = $sqlLiteConnector ?? new SqlLiteConnector();
-    }
-
     /**
-     * @param Comment $entity
+     * @param EntityInterface $entity
      * @return void
      */
-    public function save(Comment $entity): void
+    public function save(EntityInterface $entity): void
     {
         /**
          * @var Comment $entity

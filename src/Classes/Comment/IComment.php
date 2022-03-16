@@ -2,10 +2,11 @@
 
 namespace App\Classes\Comment;
 
+use App\Classes\EntityInterface;
 
-interface IComment
+interface IComment extends EntityInterface
 {
-    public function getId(): string;
+    public function getId(): ?int;
 
     public function getAuthorId(): string;
 

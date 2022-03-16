@@ -19,7 +19,7 @@ class Article implements IArticle
         $this->setText($text);
     }
 
-    public function getId(): string
+    public function getId(): ?int
     {
         return $this->id;
     }

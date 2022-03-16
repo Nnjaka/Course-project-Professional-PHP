@@ -2,10 +2,11 @@
 
 namespace App\Classes\Article;
 
+use App\Classes\EntityInterface;
 
-interface IArticle
+interface IArticle extends EntityInterface
 {
-    public function getId(): string;
+    public function getId(): ?int;
 
     public function getAuthorId(): string;
 

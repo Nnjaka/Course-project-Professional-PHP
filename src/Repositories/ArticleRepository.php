@@ -4,26 +4,20 @@ namespace App\Repositories;
 
 use App\Classes\Article\Article;
 use App\Repositories\ArticleRepositoryInterface;
-use App\Connections\SqlLiteConnector;
-use App\Connections\SqlLiteConnectorInterface;
 use App\Exceptions\ArticleNotFoundException;
 use PDO;
 use PDOStatement;
+use App\Repositories\EntityRepository;
+use App\Classes\EntityInterface;
 
-class ArticleRepository implements ArticleRepositoryInterface
+class ArticleRepository extends EntityRepository implements ArticleRepositoryInterface
 {
-    private SqlLiteConnectorInterface $connector;
-
-    public function __construct(SqlLiteConnectorInterface $sqlLiteConnector = null)
-    {
-        $this->connector = $sqlLiteConnector ?? new SqlLiteConnector();
-    }
 
     /**
-     * @param Article $entity
+     * @param EntityInterface $entity
      * @return void
      */
-    public function save(Article $entity): void
+    public function save(EntityInterface $entity): void
     {
         /**
          * @var Article $entity

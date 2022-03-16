@@ -3,26 +3,20 @@
 namespace App\Repositories;
 
 use App\Classes\User\User;
-use App\Connections\SqlLiteConnector;
-use App\Connections\SqlLiteConnectorInterface;
 use App\Exceptions\UserNotFoundException;
 use PDO;
 use PDOStatement;
+use App\Repositories\EntityRepository;
+use App\Classes\EntityInterface;
 
-class UserRepository implements UserRepositoryInterface
+
+class UserRepository extends EntityRepository implements UserRepositoryInterface
 {
-    private SqlLiteConnectorInterface $connector;
-
-    public function __construct(SqlLiteConnectorInterface $sqlLiteConnector = null)
-    {
-        $this->connector = $sqlLiteConnector ?? new SqlLiteConnector();
-    }
-
     /**
-     * @param User $entity
+     * @param EntityInterface $entity
      * @return void
      */
-    public function save(User $entity): void
+    public function save(EntityInterface $entity): void
     {
         /**
          * @var User $entity

@@ -19,7 +19,7 @@ class Comment implements IComment
         $this->setComment($comment);
     }
 
-    public function getId(): string
+    public function getId(): ?int
     {
         return $this->id;
     }
