@@ -4,41 +4,38 @@ namespace App\Managers;
 
 use App\Classes\EntityInterface;
 use App\Managers\EntityManagerInterface;
-use App\Commands\SaveCommand;
-use App\Commands\DeleteCommand;
-use App\Repositories\ArticleRepository;
-use App\Repositories\CommentRepository;
-use App\Repositories\EntityRepository;
-use App\Repositories\UserRepository;
+use App\Classes\Article\Article;
+use App\Classes\User\User;
+use App\Classes\Comment\Comment;
+use App\Commands\CreateEntityCommand;
+use App\Commands\DeleteEntityCommand;
+use App\Commands\CreateUserCommandHandler;
+use App\Commands\CreateArticleCommandHandler;
+use App\Commands\CreateCommentCommandHandler;
+use App\Commands\DeleteUserCommandHandler;
+use App\Commands\DeleteArticleCommandHandler;
+use App\Commands\DeleteCommentCommandHandler;
 
 
 class EntityManager implements EntityManagerInterface
 {
-    protected function getRepositoryName(string $class): EntityRepository
+    public function createCommandHandler(EntityInterface $entity)
     {
-
-        return match (mb_strtoupper($class)) {
-            "USER" => new UserRepository(),
-            "ARTICLE" => new ArticleRepository(),
-            "COMMENT" => new CommentRepository()
+        $commandHandler = match ($entity::class) {
+            User::class => new CreateUserCommandHandler(),
+            Article::class => new CreateArticleCommandHandler(),
+            Comment::class => new CreateCommentCommandHandler()
         };
+        return $commandHandler->handle(new CreateEntityCommand($entity), $entity);
     }
 
-    protected function getClassName(EntityInterface $entity): string
+    public function deleteCommandHandler(string $class, int $id)
     {
-        $arrayClass = (explode('\\', $entity::class));
-        return end($arrayClass);
+        $commandHandler = match ($class) {
+            'user' => new DeleteUserCommandHandler(),
+            'article' => new DeleteArticleCommandHandler(),
+            'comment' => new DeleteCommentCommandHandler()
+        };
+        return $commandHandler->handle(new DeleteEntityCommand($id), $id);
     }
-
-    public function save(EntityInterface $entity)
-    {
-        $command = new SaveCommand($this->getRepositoryName($this->getClassName($entity)));
-        return $command->handle($entity);
-    }
-
-    public function delete(string $class, int $id)
-    {
-        $command = new DeleteCommand($this->getRepositoryName($class));
-        return $command->handle($id);
-    }
-}
+};

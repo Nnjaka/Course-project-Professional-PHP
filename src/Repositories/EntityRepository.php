@@ -15,7 +15,5 @@ abstract class EntityRepository implements EntityRepositoryInterface
         $this->connector = $sqlLiteConnector ?? new SqlLiteConnector();
     }
 
-    abstract public function save(EntityInterface $entity): void;
     abstract public function get(int  $id): EntityInterface;
-    abstract public function delete(int $id): void;
 }
