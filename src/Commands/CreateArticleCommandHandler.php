@@ -8,6 +8,7 @@ use App\Commands\CommandInterface;
 use App\Commands\CreateEntityCommand;
 use App\Exceptions\ArticleNotFoundException;
 use App\Exceptions\ArticleIdExistException;
+use App\Repositories\ArticleRepository;
 use App\Repositories\ArticleRepositoryInterface;
 
 class CreateArticleCommandHandler implements CommandHandlerInterface
@@ -15,9 +16,10 @@ class CreateArticleCommandHandler implements CommandHandlerInterface
     private \PDOStatement|false $stmt;
 
     public function __construct(
-        private ArticleRepositoryInterface $articleRepository,
+        private ?ArticleRepositoryInterface $articleRepository = null,
         private ?ConnectorInterface $connector = null
     ) {
+        $this->userRepository = $articleRepository ?? new ArticleRepository();
         $this->connector = $connector ?? new SqlLiteConnector();
         $this->stmt = $this->connector->getConnection()->prepare($this->getSQL());
     }

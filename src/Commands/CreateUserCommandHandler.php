@@ -7,6 +7,7 @@ use App\Connections\SqlLiteConnector;
 use App\Commands\CommandInterface;
 use App\Exceptions\UserEmailExistException;
 use App\Exceptions\UserNotFoundException;
+use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 
 
@@ -15,9 +16,10 @@ class CreateUserCommandHandler implements CommandHandlerInterface
     private \PDOStatement|false $stmt;
 
     public function __construct(
-        private UserRepositoryInterface $userRepository,
+        private ?UserRepositoryInterface $userRepository = null,
         private ?ConnectorInterface $connector = null
     ) {
+        $this->userRepository = $userRepository ?? new UserRepository();
         $this->connector = $connector ?? new SqlLiteConnector();
         $this->stmt = $this->connector->getConnection()->prepare($this->getSQL());
     }

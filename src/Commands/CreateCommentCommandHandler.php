@@ -9,16 +9,17 @@ use App\Commands\CreateEntityCommand;
 use App\Repositories\CommentRepositoryInterface;
 use App\Exceptions\CommentIdExistException;
 use App\Exceptions\CommentNotFoundException;
-
+use App\Repositories\CommentRepository;
 
 class CreateCommentCommandHandler implements CommandHandlerInterface
 {
     private \PDOStatement|false $stmt;
 
     public function __construct(
-        private CommentRepositoryInterface $commentRepository,
+        private ?CommentRepositoryInterface $commentRepository = null,
         private ?ConnectorInterface $connector = null,
     ) {
+        $this->commentRepository = $commentRepository ?? new CommentRepository();
         $this->connector = $connector ?? new SqlLiteConnector();
         $this->stmt = $this->connector->getConnection()->prepare($this->getSQL());
     }

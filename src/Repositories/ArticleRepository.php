@@ -34,6 +34,6 @@ class ArticleRepository extends EntityRepository implements ArticleRepositoryInt
             throw new ArticleNotFoundException('Статья не найдена');
         }
 
-        return new Article($result->authorId, $result->header, $result->text);
+        return new Article($result->author_id, $result->header, $result->text);
     }
 }

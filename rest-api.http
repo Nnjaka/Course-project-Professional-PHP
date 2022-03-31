@@ -1,0 +1,33 @@
+# GET http://127.0.0.1:8000/user/show?email=vinter@ya.ru
+# GET http://127.0.0.1:8000/article/show?id=4
+# GET http://127.0.0.1:8000/comment/show?id=4
+
+# DELETE http://127.0.0.1:8000/user?id=11
+# DELETE http://127.0.0.1:8000/article?id=9
+# DELETE http://127.0.0.1:8000/comment?id=7
+
+# POST http://127.0.0.1:8000/user/create
+
+# {
+#     "firstName": "Irina",
+#     "lastName": "Vinter",
+#     "email": "vin@ya.ru"
+# }
+
+
+# POST http://127.0.0.1:8000/article/create
+
+# {
+#     "authorId": "15",
+#     "header": "Header",
+#     "text": "Text"
+# }
+
+
+# POST http://127.0.0.1:8000/comment/create
+
+# {
+#     "authorId": "10",
+#     "articleId": "Vinter",
+#     "comment": "Comment"
+# }

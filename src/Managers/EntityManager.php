@@ -15,18 +15,15 @@ use App\Commands\CreateCommentCommandHandler;
 use App\Commands\DeleteUserCommandHandler;
 use App\Commands\DeleteArticleCommandHandler;
 use App\Commands\DeleteCommentCommandHandler;
-use App\Repositories\UserRepository;
-use App\Repositories\ArticleRepository;
-use App\Repositories\CommentRepository;
 
 class EntityManager implements EntityManagerInterface
 {
     public function createCommandHandler(EntityInterface $entity)
     {
         $commandHandler = match ($entity::class) {
-            User::class => new CreateUserCommandHandler(new UserRepository()),
-            Article::class => new CreateArticleCommandHandler(new ArticleRepository()),
-            Comment::class => new CreateCommentCommandHandler(new CommentRepository())
+            User::class => new CreateUserCommandHandler(),
+            Article::class => new CreateArticleCommandHandler(),
+            Comment::class => new CreateCommentCommandHandler()
         };
         return $commandHandler->handle(new CreateEntityCommand($entity), $entity);
     }
